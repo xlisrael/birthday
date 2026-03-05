@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Special Birthday Surprise 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Login Page */
+        #login-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 10;
+            transition: all 1s ease-in-out;
+        }
+
+        #login-page.melt {
+            transform: translateY(100%) scale(0.1);
+            opacity: 0;
+            filter: blur(10px);
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-container h1 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .login-container input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .login-container button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .login-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .error-message {
+            color: #ff4757;
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Heart Animation */
+        .heart {
+            position: fixed;
+            font-size: 100%;
+            pointer-events: none;
+            z-index: 20;
+            animation: float 2s ease-in forwards;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Content Page - Three column layout */
+        #main-page {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #main-page.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .three-column-layout {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        /* Left Image Column */
+        .image-column-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Right Image Column */
+        .image-column-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Center Content Column */
+        .content-column {
+            flex: 3;
+            max-width: 900px;
+        }
+
+        .content-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        /* Image Cards */
+        .image-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 3px solid white;
+            text-align: center;
+            /* height: 400px; */
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: #f5576c;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid white;
+
+        }
+
+        .image-card video {
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid white;
+
+        }
+
+        .image-card p {
+            color: #764ba2;
+            margin-top: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .birthday-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .birthday-header h1 {
+            font-size: 3em;
+            color: #f5576c;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .attribute-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .attribute-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-color: #f5576c;
+        }
+
+        .attribute-card .emoji {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .attribute-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .attribute-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        /* Prayer section */
+        .prayer-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .prayer-section h2 {
+            color: #f5576c;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .prayer-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .prayer-item {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            color: #764ba2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Music Video */
+        .music-video-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .music-video-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+
+        .surprise-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .surprise-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.5);
+        }
+
+        /* Typing Animation Text */
+        .typing-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #764ba2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            border: 3px dashed #f5576c;
+        }
+
+        .typing-text {
+            display: inline-block;
+            border-right: 4px solid #764ba2;
+            padding-right: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .three-column-layout {
+                flex-direction: column;
+            }
+            
+            .image-column-left, .image-column-right {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .image-card {
+                width: calc(50% - 10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .attributes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .birthday-header h1 {
+                font-size: 2em;
+            }
+            
+            .content-container {
+                padding: 20px;
+            }
+            
+            .typing-container {
+                font-size: 1.3em;
+            }
+            
+            .image-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page">
+        <div class="login-container">
+            <h1>🎂 What is the passcode birthday girl? 🎂</h1>
+            <p style="margin-bottom: 20px; color: #666;">Enter the birthday girl's name...</p>
+            <input type="text" id="name-input" placeholder="Enter name here...">
+            <br>
+            <button onclick="checkName()">Enter ✨</button>
+            <div id="error-message" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Main Content Page - Three Column Layout -->
+    <div id="main-page">
+        <div class="three-column-layout">
+            
+            <!-- LEFT IMAGE COLUMN (4 cards) -->
+            <div class="image-column-left">
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <img src="lil baby.jpg" alt="Beautiful You">
+                    <p>✨ Beautiful You ✨</p>
+                </div>
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <img src="IMG-20260125-WA0010.jpg" alt="That Smile">
+                    <p>😊 That Radiant Smile 😊</p>
+                </div>
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <img src="explain.jpg" alt="Happy Moments">
+                    <p>🎉 Happy Moments 🎉</p>
+                    <p>Do and explain this picture oo</p>
+                </div>
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <img src="cutie.jpg" alt="Queen">
+                    <p>👑 Absolute Queen 👑</p>
+                </div>
+            </div>
+
+            <!-- CENTER CONTENT COLUMN -->
+            <div class="content-column">
+                <div class="content-container">
+                    <div class="birthday-header">
+                        <h1>🎉 Happy Birthday! 🎉</h1>
+                        <p style="font-size: 1.3em; color: #764ba2;">To someone who's absolutely...</p>
+                        <p style="font-size: 1.3em; color: #764ba2">..Damn I'm SHORT of words! 😄</p>
+                    </div>
+
+                    <!-- Attributes Grid -->
+                    <div class="attributes-grid">
+                        <div class="attribute-card">
+                            <span class="emoji">✨</span>
+                            <h3>Radiant Smile</h3>
+                            <p>Could probably power a small city with that smile! Though it's usually accompanied by some mischief...</p>
+                        </div>
+
+                        <div class="attribute-card">
+                            <span class="emoji">🎯</span>
+                            <h3>Determined</h3>
+                            <p>Once you set your mind to something, nothing can stop you. Except maybe food. Or sleep. Or a good meme.</p>
+                        </div>
+
+                        <div class="attribute-card">
+                            <span class="emoji">🤔</span>
+                            <h3>Mysteriously Smart</h3>
+                            <p>You're either planning world domination or what to eat for dinner. Both require similar brain power.</p>
+                        </div>
+
+                        <div class="attribute-card">
+                            <span class="emoji">💖</span>
+                            <h3>Beautiful Personality</h3>
+                            <p>....People may say otherwise but I can't find the wrong in you</p>
+                        </div>
+                    </div>
+
+                    <!-- Prayer Section -->
+                    <div class="prayer-section">
+                        <h2>I Pray that:</h2>
+                        <div class="prayer-list">
+                            <span class="prayer-item">God's favor, love, peace, grace, mercy, provision will surround you beyond human understanding</span>
+                            <span class="prayer-item">You experience nothing but Joy from this day onward..</span>
+                            <span class="prayer-item">Failure will be far from you, success is all you'll see..</span>
+                            <span class="prayer-item">The smile you have on right now will stick with you from this day till forever..</span>
+                            <span class="prayer-item">You grow higher and higher in all ramifications (especially in height..)</span>
+                            <span class="prayer-item">In Jesus Name</span>
+                            <span class="prayer-item">AMEN!!!!</span>
+                        </div>
+                    </div>
+
+                    <!-- Random Music Video -->
+                    <div class="music-video-section">
+                        <h2>🎵 Sorry, but I coudnt resist 🎵</h2>
+                        <h2>🎵 Thus.. 🎵</h2>
+                        <div class="video-container">
+                            <video controls autoplay loop>
+                                <source src="birthday.mp4" type="video/mp4">
+                                Your browser doesn't support video playback.
+                            </video>
+                        </div>
+                        <p style="margin-top: 15px; color: #666; font-style: italic;">
+                            Hope you enjoyed the song!!
+                        </p>
+                    </div>
+
+                    <!-- Surprise Button -->
+                    <div style="text-align: center;">
+                        <button class="surprise-button" onclick="createHeartExplosion()">
+                            Click for More Love! 💖
+                        </button>
+                    </div>
+
+                    <!-- Typing Animation Text -->
+                    <div class="typing-container">
+                        <span id="typing-text" class="typing-text"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT IMAGE COLUMN (4 cards) -->
+            <div class="image-column-right">
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <!-- <img src="https://via.placeholder.com/300x200/ff9a9e/ffffff?text=Stunning" alt="Stunning"> -->
+                    <video src="VID-20260305-WA0031.mp4" autoplay muted loop></video>
+                    <p>💫 Your hair Simply Stunning 💫</p>
+                </div>
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <video src="VID-20260305-WA0032.mp4" autoplay muted loop></video>
+                    <p>💝 Those eye-brows Absolutely Gorgeous 💝</p>
+                </div>
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <img src="7d2ce9feeab3431d9909614c6712fe08.jpg" alt="Amazing">
+                    <p>⭐ Beauty.. Truly Amazing ⭐</p>
+                </div>
+                <div class="image-card" onclick="createHeartExplosion()">
+                    <img src="beauty.jpg" alt="One of a Kind">
+                    <p>🌟 One of a Kind 🌟</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CORRECT_NAME = "Mary Emmanuel";
+
+        function checkName() {
+            const input = document.getElementById('name-input');
+            const name = input.value.trim();
+            const errorDiv = document.getElementById('error-message');
+            
+            if (name.toLowerCase() === CORRECT_NAME.toLowerCase()) {
+                // Correct name - melt away and show hearts
+                errorDiv.innerHTML = '';
+                createHeartExplosion();
+                
+                document.getElementById('login-page').classList.add('melt');
+                
+                setTimeout(() => {
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('main-page').classList.add('show');
+                    
+                    // Start typing animation when main page is shown
+                    setTimeout(() => {
+                        startTypingAnimation();
+                    }, 500);
+                }, 1000);
+            } else {
+                
+                errorDiv.innerHTML = '🚫 This isn\'t for you! You can leave now!! 🚫';
+              
+                document.querySelector('.login-container').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.querySelector('.login-container').style.animation = '';
+                }, 500);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-20px); }
+                75% { transform: translateX(20px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        function createHeartExplosion() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 50);
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['❤️', '🧡', '💛', '🎉', '💙', '💜', '🎂', '🤍'][Math.floor(Math.random() * 8)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.fontSize = (50 + Math.random() * 100) + 'px';
+            heart.style.animationDuration = (2 + Math.random() * 1) + 's';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        // Typing Animation Function
+        function startTypingAnimation() {
+            const text = "Happy Birthday Beautiful! 💖 \nThank you for the love, Thank you for listening to me talk rubbish, for tolerating my dumb behaviours.. I know I can be alot but you stayed anyways.. \nYou have been a great friend and I won't for once take it for granted.. \nI pray that this year brings you nothing but joy, peace, hope, blessings, favour in all your endeavours.. \n May all your heart desires and them secret prayers come pass.. \n AMEN \n Enjoy your day to the fullest beautiful, washing plates on me!";
+            const typingElement = document.getElementById('typing-text');
+            let i = 0;
+            
+            typingElement.innerHTML = '';
+            
+            function typeNext() {
+                if (i < text.length) {
+                    typingElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeNext, 100);
+                }
+            }
+            
+            typeNext();
+        }
+
+        // Check if user has scrolled to the typing container
+        window.addEventListener('scroll', function() {
+            const typingContainer = document.querySelector('.typing-container');
+            const typingText = document.getElementById('typing-text');
+            
+            if (typingContainer && typingText && typingText.innerHTML === '') {
+                const containerPosition = typingContainer.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // If container is visible in viewport
+                if (containerPosition.top < windowHeight - 100) {
+                    startTypingAnimation();
+                }
+            }
+        });
+
+        // Allow Enter key to submit
+        document.getElementById('name-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkName();
+            }
+        });
+    </script>
+</body>
+</html>
